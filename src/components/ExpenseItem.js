@@ -3,7 +3,7 @@ import { AppContext } from "../context/AppContext";
 import { TiDelete } from "react-icons/ti";
 
 const ExpenseItem = (props) => {
-    const { dispatch } = useContext(AppContext);
+    const { dispatch, currency } = useContext(AppContext);
 
     const handleDeleteExpense = () => {
         dispatch({
@@ -24,13 +24,63 @@ const ExpenseItem = (props) => {
         });
     };
 
+    const decreaseAllocation = (name) => {
+        const expense = {
+            name: name,
+            cost: 10,
+        };
+
+        dispatch({
+            type: `RED_EXPENSE`,
+            payload: expense,
+        });
+    };
+
     return (
         <tr>
             <td>{props.name}</td>
-            <td>£{props.cost}</td>
             <td>
-                <button onClick={(event) => increaseAllocation(props.name)}>
+                {currency}
+                {props.cost}
+            </td>
+            <td>
+                <button
+                    onClick={(event) => increaseAllocation(props.name)}
+                    style={{
+                        backgroundColor: "green",
+                        color: "white",
+                        borderRadius: "50%",
+                        width: "30px",
+                        height: "30px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        border: "none",
+                        fontWeight: "extrabold",
+                        fontsize: "120px",
+                    }}
+                >
                     +
+                </button>
+            </td>
+            <td>
+                <button
+                    onClick={(event) => decreaseAllocation(props.name)}
+                    style={{
+                        backgroundColor: "red",
+                        color: "white",
+                        borderRadius: "50%",
+                        width: "30px",
+                        height: "30px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        border: "none",
+                        fontWeight: "extrabold",
+                        fontsize: "120px",
+                    }}
+                >
+                    -
                 </button>
             </td>
             <td>
